@@ -1,6 +1,6 @@
 import { cloneDeep } from 'lodash';
 import React, { useState } from 'react';
-import { formattedList } from '../pages/api/problems';
+import { formattedList } from '../pages/api/choices';
 import { Card } from './Card';
 import { styles } from './styles';
 
