@@ -14,22 +14,25 @@ const generatePairs = (list: string[]): Pair[] => {
   return pairs.concat(generatePairs(list.slice(1)));
 };
 
-function randomize<T>(values: T[]): T[] {
+const randomize = <T>(values: T[]): T[] => {
   const shuffled = [...values];
   let index = shuffled.length;
 
   while (index !== 0) {
     const randomIndex = Math.floor(Math.random() * index);
     index--;
-    [shuffled[index], shuffled[randomIndex]] = [shuffled[randomIndex], shuffled[index]];
+    [shuffled[index], shuffled[randomIndex]] = [
+      shuffled[randomIndex],
+      shuffled[index],
+    ];
   }
 
   return shuffled;
-}
+};
 
 export const generateRandomPairs = (input: string): Pair[] => {
   const items = input
-    .split(',')
+    .split(",")
     .map((item) => item.trim())
     .filter((item) => item.length > 0);
 
@@ -39,7 +42,7 @@ export const generateRandomPairs = (input: string): Pair[] => {
 
 export const parseInputList = (input: string): string[] => {
   return input
-    .split(',')
+    .split(",")
     .map((item) => item.trim())
     .filter((item) => item.length > 0);
 };
