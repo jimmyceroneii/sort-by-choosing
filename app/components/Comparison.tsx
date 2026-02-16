@@ -1,26 +1,30 @@
 import { cloneDeep } from 'lodash';
 import React, { useState } from 'react';
-import { formattedList } from '../pages/api/choices';
 import { Card } from './Card';
 import { styles } from './styles';
 
 type Score = Record<string, number>;
+type Pair = [string, string];
+
+type ComparisonProps = {
+  pairs: Pair[];
+};
 
 const updateScore = ({
   scores,
   index,
-  currentEntry,
+  currentPair,
 }: {
   scores: Score;
   index: number;
-  currentEntry: number;
+  currentPair: Pair;
 }): Score => {
   const clonedScores = cloneDeep(scores);
 
-  if (formattedList[currentEntry][index] in scores) {
-    clonedScores[formattedList[currentEntry][index]] += 1;
+  if (currentPair[index] in scores) {
+    clonedScores[currentPair[index]] += 1;
   } else {
-    clonedScores[formattedList[currentEntry][index]] = 1;
+    clonedScores[currentPair[index]] = 1;
   }
 
   return clonedScores;
@@ -44,7 +48,7 @@ const sortScores = ({
   return sortedScores;
 };
 
-export const Comparison: React.FC = () => {
+export const Comparison: React.FC<ComparisonProps> = ({ pairs }) => {
   const [scores, setScores] = useState<Score>({});
   const [currentEntry, setCurrentEntry] = useState(0);
 
@@ -55,30 +59,24 @@ export const Comparison: React.FC = () => {
     index: number;
     scores: Score;
   }) => {
-    // update the "score"
-    setScores(updateScore({ scores, index, currentEntry }));
-
-    // update current entry
+    setScores(updateScore({ scores, index, currentPair: pairs[currentEntry] }));
     setCurrentEntry(currentEntry + 1);
   };
 
-  return currentEntry < formattedList.length ? (
+  return currentEntry < pairs.length ? (
     <div style={styles.cardContainer}>
       <Card
         onClick={() => {
           updateComparison({ index: 0, scores });
         }}
-        item={formattedList[currentEntry][0]}
+        item={pairs[currentEntry][0]}
       />
       <Card
         onClick={() => {
-          // update the "score"
-          setScores(updateScore({ scores, index: 1, currentEntry }));
-
-          // update current entry
+          setScores(updateScore({ scores, index: 1, currentPair: pairs[currentEntry] }));
           setCurrentEntry(currentEntry + 1);
         }}
-        item={formattedList[currentEntry][1]}
+        item={pairs[currentEntry][1]}
       />
     </div>
   ) : (
