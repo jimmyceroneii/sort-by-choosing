@@ -80,15 +80,15 @@ export const Comparison: React.FC<ComparisonProps> = ({ pairs }) => {
       />
     </div>
   ) : (
-    <div>
-      <h1>Top & Bottom Score:</h1>
+    <div style={styles.inputContainer}>
+      <h2>Top & Bottom Score:</h2>
       {[
         sortScores({ scores })[0],
         sortScores({ scores })[sortScores({ scores }).length - 1],
       ].map((score, i) => {
         return (
           <div key={i}>
-            <p>{JSON.stringify(score)}</p>
+            <p style={styles.choiceText}>{score.name}: {score.score}</p>
           </div>
         );
       })}
@@ -96,7 +96,7 @@ export const Comparison: React.FC<ComparisonProps> = ({ pairs }) => {
       {sortScores({ scores }).map((score, i) => {
         return (
           <div key={i}>
-            <p>{JSON.stringify(score)}</p>
+            <p style={styles.choiceText}>{score.name}: {score.score}</p>
           </div>
         );
       })}
