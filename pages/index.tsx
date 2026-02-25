@@ -12,7 +12,7 @@ const Home: NextPage = () => {
     return <ListInput onSubmit={setPairs} />;
   }
 
-  return <Comparison pairs={pairs} />;
+  return <Comparison pairs={pairs} onRestart={() => setPairs(null)} />;
 };
 
 export default Home;
